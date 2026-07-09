@@ -1,8 +1,8 @@
-from infraestrutura.logger import configurar_logging
 from automacao.automacao_clientes import AutomacaoClientes
 
 
 if __name__ == "__main__":
     
-    configurar_logging()
+    print(f"****MENU INICIAL - AUTOMACAO****")
+    print(f"Iniciando automação de clientes...")
     AutomacaoClientes().executar()
