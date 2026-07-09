@@ -8,13 +8,24 @@ from configuracao.configuracoes import Configuracoes
 
 
 class Navegador:
-
-    def __init__(self) -> None:
-        self._driver: WebDriver | None = None
-
+    
     def abrir(self) -> WebDriver:
         print("Abrindo navegador...")
 
+        opcoes = self._criar_opcoes()
+
+        servico = Service(ChromeDriverManager().install())
+
+        self._driver = webdriver.Chrome(
+            service=servico,
+            options=opcoes
+        )
+
+        print("Navegador aberto.")
+
+        return self._driver
+        
+    def _criar_opcoes(self) -> Options:
         opcoes = Options()
 
         if Configuracoes.MODO_HEADLESS:
@@ -33,19 +44,4 @@ class Navegador:
             },
         )
 
-        servico = Service(ChromeDriverManager().install())
-
-        self._driver = webdriver.Chrome(
-            service=servico,
-            options=opcoes
-        )
-
-        print("Navegador aberto.")
-
-        return self._driver
-
-    def fechar(self) -> None:
-        if self._driver:
-            print("Fechando navegador...")
-            self._driver.quit()
-            self._driver = None
+        return opcoes
