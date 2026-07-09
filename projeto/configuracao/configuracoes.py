@@ -4,36 +4,19 @@ from pathlib import Path
 class Configuracoes:
     """Centraliza todas as constantes e parâmetros de configuração do projeto."""
 
-    # ---------------------------------------------------------------------------
-    # Diretórios
-    # ---------------------------------------------------------------------------
+    #Diretorios 
     DIRETORIO_RAIZ: Path = Path(__file__).parent.parent
     DIRETORIO_DOWNLOADS: Path = DIRETORIO_RAIZ / "downloads"
 
-    # ---------------------------------------------------------------------------
-    # Google Drive
-    # ---------------------------------------------------------------------------
+    #Google Drive
     URL_PLANILHA_GOOGLE_DRIVE: str = "https://drive.google.com/drive/folders/1I1byidvRDJk4T_Sfl7QmdZjPEnfHLQi5"
 
-    # TODO: confirmar o nome exato do arquivo gerado após o download
     NOME_ARQUIVO_PLANILHA: str = "planilha.xlsx"
 
-    # ---------------------------------------------------------------------------
-    # Sistema B
-    # ---------------------------------------------------------------------------
-    # TODO: inserir a URL de acesso ao Sistema B
+    # Site final
     URL_SISTEMA_B: str = "TODO: URL_DO_SISTEMA_B"
 
-    # ---------------------------------------------------------------------------
-    # Credenciais do Sistema B
-    # TODO: avaliar mover para variáveis de ambiente (.env) antes de produção
-    # ---------------------------------------------------------------------------
-    USUARIO_SISTEMA_B: str = "TODO: USUARIO"
-    SENHA_SISTEMA_B: str = "TODO: SENHA"
-
-    # ---------------------------------------------------------------------------
-    # Planilha — cabeçalhos obrigatórios
-    # ---------------------------------------------------------------------------
+    # Configurações do navegador
     CABECALHOS_OBRIGATORIOS: list[str] = [
         "Email do Solicitante",
         "Montante do Empréstimo",
@@ -42,13 +25,7 @@ class Configuracoes:
         "Idade",
     ]
 
-    # ---------------------------------------------------------------------------
-    # Selenium — tempos de espera (em segundos)
-    # ---------------------------------------------------------------------------
-    TIMEOUT_PADRAO: int = 20
-    TIMEOUT_DOWNLOAD: int = 60
-
-    # ---------------------------------------------------------------------------
-    # Chrome
-    # ---------------------------------------------------------------------------
-    MODO_HEADLESS: bool = False
+    # Configurações de tempo (em segundos)
+    TEMPO_CARREGAMENTO = 2
+    TEMPO_DOWNLOAD = 5
+    TEMPO_ENTRE_CONSULTAS = 1

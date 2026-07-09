@@ -6,25 +6,19 @@ from servicos.servico_consulta import ServicoConsulta
 
 logger = obter_logger(__name__)
 
-
 class AutomacaoClientes:
-    """
-    Orquestra o fluxo completo da automação.
-
-    Não contém código de Selenium, XPath, HTML ou planilha.
-    Apenas coordena os serviços em ordem.
-    """
+    #Orquestra o fluxo da automação (completa)
 
     def executar(self) -> None:
-        """Ponto de entrada da automação. Coordena todas as etapas do fluxo."""
+        #Ponto de entrada da automação. Coordena as etapas do fluxo.
         navegador = Navegador()
         try:
-            driver = navegador.abrir()
+            sessao = navegador.abrir()
 
-            caminho_planilha = ServicoDownload(driver).baixar_planilha()
+            caminho_planilha = ServicoDownload(sessao).baixar_planilha()
             clientes = LeitorPlanilha().ler(caminho_planilha)
 
-            consulta = ServicoConsulta(driver)
+            consulta = ServicoConsulta(sessao)
             consulta.acessar_sistema()
 
             for cliente in clientes:
