@@ -12,3 +12,4 @@ class Cliente:
     termo_emprestimo: str
     renda_anual_atual: str
     idade: str
+    mensagem_retorno: str = ""  
