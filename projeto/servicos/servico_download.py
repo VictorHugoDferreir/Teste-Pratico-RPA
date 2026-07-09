@@ -1,57 +1,57 @@
 import time
 from pathlib import Path
 
+import pyautogui
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from configuracao.configuracoes import Configuracoes
+from configuracao.configuracoes import (
+    URL_PLANILHA_GOOGLE_DRIVE,
+    DIRETORIO_DOWNLOADS,
+    NOME_ARQUIVO_PLANILHA,
+    TEMPO_CARREGAMENTO,
+    TEMPO_VERIFICACAO_DOWNLOAD,
+)
 
 
-class ServicoDownload:
+SELETOR_ARQUIVO_PLANILHA = (
+    By.XPATH,
+    "//div[contains(@aria-label, '.xlsx') or contains(@aria-label, '.xls')]",
+)
 
-    SELETOR_ARQUIVO_PLANILHA = (
-        By.XPATH,
-        "//div[contains(@aria-label, '.xlsx') or contains(@data-tooltip, '.xlsx')]",
+
+def baixar_planilha(navegador: WebDriver) -> Path:
+    
+    print("Acessando Google Drive...")
+
+    navegador.get(URL_PLANILHA_GOOGLE_DRIVE) #busca a planilha no google drive
+    time.sleep(TEMPO_CARREGAMENTO)
+
+    print("Localizando planilha...")
+
+    arquivo = navegador.find_element(*SELETOR_ARQUIVO_PLANILHA) #encontra o arquivo da planilha
+
+    ActionChains(navegador).move_to_element(arquivo).perform() #move o mouse para o elemento
+
+    print("Abrindo menu de contexto...")
+
+    pyautogui.click(button="right")
+
+    print("Selecionando Download...")
+
+    pyautogui.press("down")
+    pyautogui.press("enter")
+
+    caminho = (
+        DIRETORIO_DOWNLOADS / NOME_ARQUIVO_PLANILHA
     )
 
-    SELETOR_OPCAO_DOWNLOAD_MENU = (
-        By.XPATH,
-        "//li[@role='menuitem'][.//span[contains(text(), 'ownload')]]",
-    )
+    print("Aguardando download...")
 
-    def __init__(self, navegador: WebDriver) -> None:
-        self._navegador = navegador
+    while not caminho.exists():
+        time.sleep(TEMPO_VERIFICACAO_DOWNLOAD)
 
-    def baixar_planilha(self) -> Path:
-        print("Acessando Google Drive...")
+    print("Download concluído!")
 
-        self._navegador.get(Configuracoes.URL_PLANILHA_GOOGLE_DRIVE)
-
-        time.sleep(3)
-
-        arquivo = self._navegador.find_element(*self.SELETOR_ARQUIVO_PLANILHA)
-
-        ActionChains(self._navegador).context_click(arquivo).perform()
-
-        time.sleep(1)
-        opcao_download = self._navegador.find_element(
-            
-    self.SELETOR_OPCAO_DOWNLOAD_MENU
-        )
-
-        opcao_download.click()
-
-        print("Baixando planilha...")
-
-        caminho = (
-            Configuracoes.DIRETORIO_DOWNLOADS
-            / Configuracoes.NOME_ARQUIVO_PLANILHA
-        )
-
-        while not caminho.exists():
-            time.sleep(1)
-
-        print("Download concluído.")
-
-        return caminho
+    return caminho

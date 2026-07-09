@@ -1,12 +1,17 @@
+from time import time
+
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from modelos.cliente import Cliente
 from modelos.resultado import Resultado
+from configuracao.configuracoes import (
+    URL_SISTEMA_UIBANK,
+    TEMPO_CARREGAMENTO,
+)
 
-class ServicoConsulta:
-    
-    #Responsável por toda a interação com o Sistema B via Selenium.
+def acessar_sistema(navegador: WebDriver) -> None:
 
-    def __init__(self, navegador: WebDriver) -> None:
-        self._navegador = navegador 
-    
+    print("Acessando Sistema UiBank...")
+
+    navegador.get(URL_SISTEMA_UIBANK)    
+    time.sleep(TEMPO_CARREGAMENTO)
