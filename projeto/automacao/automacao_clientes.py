@@ -27,7 +27,10 @@ class AutomacaoClientes:
                     cliente
                 )
 
+                print(f"[INFO] Resultado para {cliente.email_solicitante}:\n")
                 print(resultado)
+                print("-" * 40)
 
         finally:
+            print("[INFO] Fechando navegador...")
             navegador.fechar()
