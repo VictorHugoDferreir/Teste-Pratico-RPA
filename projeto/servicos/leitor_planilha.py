@@ -1,13 +1,12 @@
 from pathlib import Path
-
 import openpyxl
 
 from modelos.cliente import Cliente
-from configuracao.configuracoes import CABECALHOS_OBRIGATORIOS
+from configuracao import configuracoes
 
 
 def ler_planilha(caminho_arquivo: Path) -> list[Cliente]:
-    print("Lendo planilha...")
+    print("[INFO] Lendo planilha...")
 
     planilha = openpyxl.load_workbook(caminho_arquivo, data_only=True)
     aba = planilha.active
@@ -20,10 +19,10 @@ def ler_planilha(caminho_arquivo: Path) -> list[Cliente]:
         if nome
     }
 
-    for coluna in CABECALHOS_OBRIGATORIOS:
+    for coluna in configuracoes.CABECALHOS_OBRIGATORIOS:
         if coluna not in cabecalhos:
             raise ValueError(
-                f"Cabeçalho '{coluna}' não encontrado na planilha."
+                f"Cabecalho '{coluna}' nao encontrado na planilha."
             )
 
     clientes = []
@@ -57,6 +56,6 @@ def ler_planilha(caminho_arquivo: Path) -> list[Cliente]:
 
         clientes.append(cliente)
 
-    print(f"{len(clientes)} cliente(s) encontrado(s).")
+    print(f"[INFO] {len(clientes)} cliente(s) encontrado(s).")
 
     return clientes
