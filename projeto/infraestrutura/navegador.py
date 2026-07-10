@@ -4,13 +4,13 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.remote.webdriver import WebDriver
 from webdriver_manager.chrome import ChromeDriverManager
 
-from configuracao.configuracoes import Configuracoes
+from configuracao import configuracoes
 
 
 class Navegador:
     
     def abrir(self) -> WebDriver:
-        print("Abrindo navegador...")
+        print("[INFO] Abrindo navegador...")
 
         opcoes = self._criar_opcoes()
 
@@ -21,15 +21,12 @@ class Navegador:
             options=opcoes
         )
 
-        print("Navegador aberto.")
+        print("[INFO] Navegador aberto.")
 
         return self._driver
-        
+            
     def _criar_opcoes(self) -> Options:
         opcoes = Options()
-
-        if Configuracoes.MODO_HEADLESS:
-            opcoes.add_argument("--headless=new")
 
         opcoes.add_argument("--start-maximized")
         opcoes.add_argument("--disable-notifications")
@@ -38,10 +35,14 @@ class Navegador:
             "prefs",
             {
                 "download.default_directory": str(
-                    Configuracoes.DIRETORIO_DOWNLOADS
+                    configuracoes.DIRETORIO_DOWNLOADS
                 ),
                 "download.prompt_for_download": False,
             },
         )
 
         return opcoes
+
+    def fechar(self) -> None:
+        self._driver.quit()
+        print("[INFO] Navegador fechado.")
