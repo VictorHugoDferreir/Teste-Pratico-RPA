@@ -21,7 +21,7 @@ class AutomacaoClientes:
             acessar_sistema(sessao)
 
             for cliente in clientes:
-
+                #chama a consulta ao sistema Uibank
                 resultado = consultar_cliente(
                     sessao,
                     cliente
