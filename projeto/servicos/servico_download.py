@@ -1,18 +1,12 @@
 import time
+import pyautogui
 from pathlib import Path
 
-import pyautogui
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from configuracao.configuracoes import (
-    URL_PLANILHA_GOOGLE_DRIVE,
-    DIRETORIO_DOWNLOADS,
-    NOME_ARQUIVO_PLANILHA,
-    TEMPO_CARREGAMENTO,
-    TEMPO_VERIFICACAO_DOWNLOAD,
-)
+from configuracao import configuracoes
 
 
 SELETOR_ARQUIVO_PLANILHA = (
@@ -23,35 +17,34 @@ SELETOR_ARQUIVO_PLANILHA = (
 
 def baixar_planilha(navegador: WebDriver) -> Path:
     
-    print("Acessando Google Drive...")
+    print("[INFO] Acessando Google Drive...")
 
-    navegador.get(URL_PLANILHA_GOOGLE_DRIVE) #busca a planilha no google drive
-    time.sleep(TEMPO_CARREGAMENTO)
+    navegador.get(configuracoes.URL_PLANILHA_GOOGLE_DRIVE) #busca a planilha no google drive
+    time.sleep(configuracoes.TEMPO_CARREGAMENTO)
 
-    print("Localizando planilha...")
+    print("[INFO] Localizando planilha...")
 
-    arquivo = navegador.find_element(*SELETOR_ARQUIVO_PLANILHA) #encontra o arquivo da planilha
+    arquivo = navegador.find_element(*SELETOR_ARQUIVO_PLANILHA)
 
-    ActionChains(navegador).move_to_element(arquivo).perform() #move o mouse para o elemento
+    print("[INFO] Abrindo menu de contexto...")
+    ActionChains(navegador).context_click(arquivo).perform()
 
-    print("Abrindo menu de contexto...")
+    time.sleep(1)
 
-    pyautogui.click(button="right")
-
-    print("Selecionando Download...")
-
+    pyautogui.press("down")
     pyautogui.press("down")
     pyautogui.press("enter")
 
     caminho = (
-        DIRETORIO_DOWNLOADS / NOME_ARQUIVO_PLANILHA
+        configuracoes.DIRETORIO_DOWNLOADS / configuracoes.NOME_ARQUIVO_PLANILHA
     )
 
-    print("Aguardando download...")
+    print("[INFO] Aguardando download...")
 
     while not caminho.exists():
-        time.sleep(TEMPO_VERIFICACAO_DOWNLOAD)
+        time.sleep(configuracoes.TEMPO_VERIFICACAO_DOWNLOAD)
+        print("[INFO] Download nao identificado, verificando novamente...")
 
-    print("Download concluído!")
+    print("[INFO] Download concluido!")
 
     return caminho
