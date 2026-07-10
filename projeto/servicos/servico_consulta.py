@@ -68,6 +68,8 @@ def _preencher_formulario(
 def _clicar_carregar(
     navegador: WebDriver,
 ) -> None:
+    
+    time.sleep(configuracoes.TEMPO_CARREGAMENTO)
 
     botao = navegador.find_element(*BOTAO_CARREGAR) #encontra o botão de carregar e clica nele
     botao.send_keys(Keys.ENTER)
@@ -75,6 +77,9 @@ def _clicar_carregar(
     time.sleep(configuracoes.TEMPO_CARREGAMENTO)
 
 def _obter_resultado(navegador: WebDriver) -> str:
+
+    time.sleep(configuracoes.TEMPO_CARREGAMENTO)
+
 
     resultado = navegador.find_element(
         By.CLASS_NAME,
