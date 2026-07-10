@@ -23,7 +23,7 @@ projeto/
 │   └── automacao_clientes.py   # Orquestra o fluxo completo da automação
 ├── configuracao/
 │   └── configuracoes.py        # Constantes: URLs, diretórios, tempos de espera, cabeçalhos
-├── dowloads/                   # Pasta de destino da planilha.
+├── dowloads/                   # Pasta de destino da planilha
 ├── infraestrutura/
 │   └── navegador.py            # Configuração e ciclo de vida do navegador (Selenium)
 ├── modelos/
