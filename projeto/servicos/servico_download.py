@@ -12,7 +12,7 @@ from configuracao import configuracoes
 SELETOR_ARQUIVO_PLANILHA = (
     By.XPATH,
     "//div[contains(@aria-label, '.xlsx') or contains(@aria-label, '.xls')]",
-)
+) #procurando o arquivo da planilha no google drive, que pode ter extensão .xlsx ou .xls
 
 
 def baixar_planilha(navegador: WebDriver) -> Path:
@@ -24,16 +24,16 @@ def baixar_planilha(navegador: WebDriver) -> Path:
 
     print("[INFO] Localizando planilha...")
 
-    arquivo = navegador.find_element(*SELETOR_ARQUIVO_PLANILHA)
+    arquivo = navegador.find_element(*SELETOR_ARQUIVO_PLANILHA) #procura o arquivo da planilha no google drive
 
     print("[INFO] Abrindo menu de contexto...")
-    ActionChains(navegador).context_click(arquivo).perform()
+    ActionChains(navegador).context_click(arquivo).perform() #clica com o botão direito do mouse no arquivo da planilha para abrir o menu de contexto
 
     time.sleep(1)
 
+    pyautogui.press("down") #procura botao de donwload
     pyautogui.press("down")
-    pyautogui.press("down")
-    pyautogui.press("enter")
+    pyautogui.press("enter") #da enter no botao de download
 
     caminho = (
         configuracoes.DIRETORIO_DOWNLOADS / configuracoes.NOME_ARQUIVO_PLANILHA
@@ -42,7 +42,7 @@ def baixar_planilha(navegador: WebDriver) -> Path:
     print("[INFO] Aguardando download...")
 
     while not caminho.exists():
-        time.sleep(configuracoes.TEMPO_VERIFICACAO_DOWNLOAD)
+        time.sleep(configuracoes.TEMPO_VERIFICACAO_DOWNLOAD) #enquanto nao achar, ele espera e verifica novamente
         print("[INFO] Download nao identificado, verificando novamente...")
 
     print("[INFO] Download concluido!")

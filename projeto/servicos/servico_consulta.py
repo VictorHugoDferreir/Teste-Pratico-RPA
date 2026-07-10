@@ -79,19 +79,19 @@ def _obter_resultado(navegador: WebDriver) -> str:
     resultado = navegador.find_element(
         By.CLASS_NAME,
         "text-center"
-    )
+    ) #localiza o elemento que contém o resultado da consulta, usando a classe CSS "text-center"
 
     elementos = resultado.find_elements(
         By.XPATH,
         ".//h1 | .//h4 | .//h5"
-    )
+    ) #localiza os elementos dentro do resultado que são cabeçalhos (h1, h4, h5) usando uma expressão XPath. 
 
     mensagem = "\n".join(
         elemento.text
         for elemento in elementos
-    )
+    ) #extrai o texto de cada elemento encontrado e os junta em uma única string, separando por quebras de linha.
 
     botao_voltar = navegador.find_element(*BOTAO_VOLTAR)
-    botao_voltar.send_keys(Keys.ENTER)
+    botao_voltar.send_keys(Keys.ENTER) #botao para voltar e preencher novamente o formulario.
 
     return mensagem

@@ -25,6 +25,7 @@ class Navegador:
 
         return self._driver
             
+    #configura as opções do navegador, como maximizar a janela, desativar notificações e definir o diretório de download padrão.
     def _criar_opcoes(self) -> Options:
         opcoes = Options()
 
