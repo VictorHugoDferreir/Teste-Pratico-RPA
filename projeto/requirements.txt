@@ -1,3 +1,4 @@
-selenium 
-openpyxl
-pyautogui 
+selenium==4.34.2
+openpyxl==3.1.5
+pyautogui==0.9.54
+webdriver-manager==4.0.2
