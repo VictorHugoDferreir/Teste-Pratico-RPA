@@ -7,7 +7,7 @@ DIRETORIO_RAIZ: Path = Path(__file__).parent.parent
 DIRETORIO_DOWNLOADS: Path = DIRETORIO_RAIZ / "downloads"
 
 #Google Drive
-URL_PLANILHA_GOOGLE_DRIVE: str = "https://drive.google.com/drive/folders/1I1byidvRDJk4T_Sfl7QmdZjPEnfHLQi5"
+URL_PLANILHA_GOOGLE_DRIVE: str = "https://drive.google.com/drive/folders/1Iu2_iEDBiA6y_l7iocQw8tab1B1iuq-k?usp=sharing"
 URL_SISTEMA_UIBANK: str = "https://uibank.uipath.com/loans/apply"
 
 NOME_ARQUIVO_PLANILHA: str = "PedidosEmprestimo.xlsx"
