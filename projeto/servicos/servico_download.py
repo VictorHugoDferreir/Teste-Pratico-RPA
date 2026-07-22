@@ -7,6 +7,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from configuracao import configuracoes
+from infraestrutura.espera import esperar_pagina
 
 
 SELETOR_ARQUIVO_PLANILHA = (
@@ -20,7 +21,7 @@ def baixar_planilha(navegador: WebDriver) -> Path:
     print("[INFO] Acessando Google Drive...")
 
     navegador.get(configuracoes.URL_PLANILHA_GOOGLE_DRIVE) #busca a planilha no google drive
-    time.sleep(configuracoes.TEMPO_CARREGAMENTO)
+    esperar_pagina(navegador)
 
     print("[INFO] Localizando planilha...")
 
@@ -31,8 +32,6 @@ def baixar_planilha(navegador: WebDriver) -> Path:
 
     time.sleep(1)
 
-    pyautogui.press("down") #procura botao de donwload
-    pyautogui.press("down")
     pyautogui.press("enter") #da enter no botao de download
 
     caminho = (

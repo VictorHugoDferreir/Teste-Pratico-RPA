@@ -9,6 +9,7 @@ from selenium.webdriver.common.keys import Keys
 
 from configuracao import configuracoes
 from modelos.cliente import Cliente
+from infraestrutura.espera import esperar_elemento, esperar_pagina
 
 #localiza os elementos da página web usando seletores do Selenium (pelo ID).
 CAMPO_EMAIL = (By.ID, "email")
@@ -24,7 +25,7 @@ def acessar_sistema(navegador: WebDriver) -> None:
 
     navegador.get(configuracoes.URL_SISTEMA_UIBANK)
 
-    time.sleep(configuracoes.TEMPO_CARREGAMENTO)
+    esperar_pagina(navegador)
 
 def consultar_cliente(
     navegador: WebDriver,
@@ -68,19 +69,23 @@ def _preencher_formulario(
 def _clicar_carregar(
     navegador: WebDriver,
 ) -> None:
-    
-    time.sleep(configuracoes.TEMPO_CARREGAMENTO)
+    esperar_elemento(
+        navegador,
+        BOTAO_CARREGAR
+    ) #espera o botão de carregar estar presente na página antes de clicar nele
 
     botao = navegador.find_element(*BOTAO_CARREGAR) #encontra o botão de carregar e clica nele
     botao.send_keys(Keys.ENTER)
 
-    time.sleep(configuracoes.TEMPO_CARREGAMENTO)
-
 def _obter_resultado(navegador: WebDriver) -> str:
 
-    time.sleep(configuracoes.TEMPO_CARREGAMENTO)
+    # 1. Espera a página de resultado carregar aguardando o surgimento do botão de voltar
+    botao_voltar = esperar_elemento(
+        navegador,
+        BOTAO_VOLTAR
+    )
 
-
+    # 2. Com a página de resultado já carregada, localiza o container e os textos
     resultado = navegador.find_element(
         By.CLASS_NAME,
         "text-center"
@@ -94,9 +99,10 @@ def _obter_resultado(navegador: WebDriver) -> str:
     mensagem = "\n".join(
         elemento.text
         for elemento in elementos
-    ) #extrai o texto de cada elemento encontrado e os junta em uma única string, separando por quebras de linha.
+        if elemento.text.strip()
+    )
 
-    botao_voltar = navegador.find_element(*BOTAO_VOLTAR)
-    botao_voltar.send_keys(Keys.ENTER) #botao para voltar e preencher novamente o formulario.
+    # 3. Clica no botão para voltar ao formulário
+    botao_voltar.send_keys(Keys.ENTER)
 
     return mensagem

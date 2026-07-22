@@ -46,7 +46,7 @@ def ler_planilha(caminho_arquivo: Path) -> list[Cliente]:
             ).strip(),
 
             termo_emprestimo=str(
-                linha[cabecalhos["Termo do Empréstimo"]] or ""
+                int(float(linha[cabecalhos["Termo do Empréstimo"]]))
             ).strip(),
 
             renda_anual_atual=str(
