@@ -25,7 +25,8 @@ projeto/
 │   └── configuracoes.py        # Constantes: URLs, diretórios, tempos de espera, cabeçalhos
 ├── dowloads/                   # Pasta de destino da planilha
 ├── infraestrutura/
-│   └── navegador.py            # Configuração e ciclo de vida do navegador (Selenium)
+│   ├── navegador.py            # Configuração e ciclo de vida do navegador (Selenium)
+    └── espera.py               # Configuração de espera para renderização de página e elementos HTML
 ├── modelos/
 │   └── cliente.py              # Dataclass Cliente
 ├── servicos/
