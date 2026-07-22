@@ -1,4 +1,4 @@
-# Teste Prático RPA
+# Treino RPA
 
 Automação RPA desenvolvida em Python que simula um fluxo de análise de pedidos de empréstimo:
 
